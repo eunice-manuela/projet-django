@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from Tickets import views
+from Terminaux_perdus import views
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
+    path('ticketing/', include('Tickets.urls',namespace='ticketing')),
+    path('terminaux/', include('Terminaux_perdus.urls', namespace='terminaux_perdus')),
 ]
