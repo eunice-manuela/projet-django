@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Tickets
 from django.shortcuts import get_object_or_404
 
+
+
 # Create your views here.
 
 def Create(request):
@@ -15,7 +17,9 @@ def Create(request):
     )
 
     ticket.save()
+
     # ecrire l'envoie de la requête
+    
 
 
 
