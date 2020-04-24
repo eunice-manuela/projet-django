@@ -1,6 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Tickets
-from django.shortcuts import get_object_or_404
 import requests
 
 
@@ -30,6 +29,10 @@ def Edit(request, ticket_id):
     commentaires = request.GET.get('commentaire')
     ticket = get_object_or_404(Tickets, pk=ticket_id)
     ticket.commentaires = commentaires
+    if request.GET.get('état') == 'résolu':
+        ticket.état = 'résolu'
+    else:
+        ticket.état = 'en cours'
 
     ticket.save()
     
