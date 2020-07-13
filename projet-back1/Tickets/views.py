@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Tickets
 import requests
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -8,24 +9,40 @@ import requests
 def Create(request):
 
     ticket = Tickets(
-        cas=request.GET.get('cas'),
-        état = 'ouvert',
-        client = request.GET.get('client'),
+        title=request.get('title'),
+        auteur=request.get('auteur_id'),
+        details=request.get('details'),
         service = request.GET.get('service'),
-        commentaires = ''
     )
-
+    ticket.setState('opened')
     ticket.save()
+    data={'status':"success"}
+    JsonResponse(data)
 
-    # ecrire l'envoie de la requête
-    url = 'url du service'
-    r = requests.post(url,data=ticket)
-    r.text()
-
-
-
-def Edit(request, ticket_id):
+def home(request):
+    return JsonResponse({'oooo':'lllll'})
     
+def getTickets(request):
+    tickets = Tickets.objects.all()[:50]
+    data={'status':"success",
+    'items':tickets}
+    JsonResponse(data)
+def delete(request):
+    id=request._get('ticket_id')
+    ticket=Tickets.get(id=id)
+    ticket.delete()
+    data={'status':'success'}
+    JsonResponse(data)
+
+
+#def response_tiket(request):
+#   editType=request.get('type')
+#  if editType = 'setPriority':
+#     edittype
+ 
+
+def Edit(request):
+
     commentaires = request.GET.get('commentaire')
     ticket = get_object_or_404(Tickets, pk=ticket_id)
     ticket.commentaires = commentaires
