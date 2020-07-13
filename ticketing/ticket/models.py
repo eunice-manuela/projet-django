@@ -52,7 +52,7 @@ class BaseUser(AbstractBaseUser, PermissionsMixin):
         self.email = self.__class__.objects.normalize_email(self.email)
 
 class Service(models.Model):
-    nom = models.CharField(_('Identifiant Client'), max_length=50, verbose_name='Nom du service')
+    nom = models.CharField(_('Nom du service'), max_length=50)
 
     def __str__(self):
         return self.nom
@@ -60,6 +60,9 @@ class Service(models.Model):
 class Client(models.Model):
     base_user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     nom = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nom
 
 class Ticket(models.Model):
     ETATS = (
@@ -74,3 +77,6 @@ class Ticket(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     date_creation = models.DateTimeField(auto_now_add=True)
     commentaire = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return 'Ticket : ' + self.cas
