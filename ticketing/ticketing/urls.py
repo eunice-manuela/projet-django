@@ -1,4 +1,4 @@
-"""mysite URL Configuration
+"""ticketing URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -14,13 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
-from Tickets import views
-from Terminaux_perdus import views
+from django.urls import path
 
 urlpatterns = [
-    path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
-    path('ticketing/', include('Tickets.urls',namespace='ticketing')),
-    path('terminaux/', include('Terminaux_perdus.urls', namespace='terminaux_perdus')),
 ]
