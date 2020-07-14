@@ -6,8 +6,10 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.decorators import api_view
 
+import random
+
 from ticket.models import Client, Service, Ticket
-from ticket.serializers import TicketSerializer
+from ticket.serializers import TicketSerializer, TicketAddSerializer
 
 @api_view(['GET', 'POST'])
 def ticket_list(request):
@@ -26,7 +28,7 @@ def ticket_list(request):
 
     elif request.method == 'POST':
         ticket_data = JSONParser().parse(request)
-        ticket_serializer = TicketSerializer(data=ticket_data)
+        ticket_serializer = TicketAddSerializer(data=ticket_data)
         if ticket_serializer.is_valid():
             ticket_serializer.save()
             return JsonResponse(ticket_serializer.data, status=status.HTTP_201_CREATED)
@@ -52,3 +54,11 @@ def ticket_detail(request, pk):
             ticket_serializer.save()
             return JsonResponse(ticket_serializer.data)
         return JsonResponse(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def client(request):
+    return JsonResponse(random.choices(list(Client.objects.values_list('pk', flat=True)))[0], safe=False)
+
+@api_view(['GET'])
+def service(request):
+    return JsonResponse(random.choices(list(Service.objects.values_list('pk', flat=True)))[0], safe=False)

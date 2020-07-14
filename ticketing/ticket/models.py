@@ -71,11 +71,12 @@ class Ticket(models.Model):
         ('Résolu', _('Résolu'))
     )
 
-    cas = models.CharField(_('Description'), max_length=255)
+    cas = models.CharField(_('Description'), max_length=100)
     etat = models.CharField(_('Etat du ticket'), choices=ETATS, max_length=10)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     date_creation = models.DateTimeField(auto_now_add=True)
+    contenu = models.CharField(_('Contenu du ticket'), max_length=512)
     commentaire = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
